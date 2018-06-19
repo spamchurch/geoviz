@@ -1,9 +1,3 @@
-<style>
-body {
-	background-image: url("bg.JPG");
-	background-size: cover;
-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
-</style>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="http://code.highcharts.com/highcharts-3d.js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
@@ -88,7 +82,6 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
         },
         chart: {
             renderTo: 'container',
-            backgroundColor:'rgba(255, 255, 255, 0.0)',
             marginTop: 0,
             type: 'scatter',
             options3d: {
@@ -115,7 +108,10 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
             }
         },
         title: {
-            text: null
+            text: 'A geospatial tendril of a Nova Scotia Backpacking Trip'
+        },
+        subtitle: {
+            text: 'Click and drag the plot area to rotate in space'
         },
         plotOptions: {
             scatter: {
@@ -124,7 +120,7 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
                 depth: 100
             }
         },
-        yAxis: {
+        posYAxis: {
             min: 0,
             max: 1,
             title: null,
@@ -140,7 +136,7 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
         zAxis: {
             min: -71.137908,
             max: -64.217382,
-            showFirstLabel: true,
+            showFirstLabel: false,
             visible: false
 
         },
@@ -152,9 +148,9 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
             colorByPoint: true,
             data: xyz
         }],
-        credits: {
-     		enabled: false
-  		}
+         credits: {
+      enabled: false
+  }
     });
 
 
@@ -190,6 +186,4 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
 
 });
 </script>
-<h2>A geospatial tendril of a Nova Scotia Backpacking Trip</h1>
-<p>From Boston to Nova Scotia and back. Color/vertical direction is time. Other two axes are latitude and longitude. Click and drag tentril to rotate it in space</p>
 <div id="container" style="height: 600px"></div>
