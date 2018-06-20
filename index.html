@@ -1,6 +1,6 @@
 <style>
 body {
-	background-image: url("bg.JPG");
+	background-image: url("img/bg4.JPG");
 	background-size: cover;
 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
 </style>
@@ -64,7 +64,7 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
         xyz.push([activityLatLng[i][0],activityAltitudes[i],activityLatLng[i][1]]);
     }
 
-    console.log(xyz);
+ 
 
     // Give the points a 3D feel by adding a radial gradient
     Highcharts.getOptions().colors = $.map(activityAltitudes, function (color) {
@@ -83,10 +83,12 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
 
     // Set up the chart
     var chart = new Highcharts.Chart({
+    	exporting: { enabled: false },
         tooltip: {
             enabled: true
         },
         chart: {
+
             renderTo: 'container',
             backgroundColor:'rgba(255, 255, 255, 0.0)',
             marginTop: 0,
@@ -144,6 +146,17 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
             visible: false
 
         },
+        plotOptions: {
+	        series: {
+	            cursor: 'pointer',
+	            events: {
+	                click: function (event) {
+	                    var index  = Math.floor(event.point.options.y*10);
+	                    $('body').css("background-image", "url(img/bg" + index+".jpg)"); 
+	                }
+	            }
+	        }
+	    },
         legend: {
             enabled: false
         },
@@ -161,6 +174,7 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
     // Add mouse events for rotation
     $(chart.container).bind('mousedown.hc touchstart.hc', function (e) {
         e = chart.pointer.normalize(e);
+        // console.log(e.target)
 
         var posX = e.pageX,
             posY = e.pageY,
@@ -172,6 +186,7 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
 
         $(document).bind({
             'mousemove.hc touchdrag.hc': function (e) {
+
                 // Run beta
                 newBeta = beta + (posX - e.pageX) / sensitivity;
                 chart.options.chart.options3d.beta = newBeta;
@@ -179,17 +194,18 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
                 // Run alpha
                 newAlpha = alpha + (e.pageY - posY) / sensitivity;
                 chart.options.chart.options3d.alpha = newAlpha;
-
                 chart.redraw(false);
             },
                 'mouseup touchend': function () {
                 $(document).unbind('.hc');
-            }
+            },
         });
     });
 
 });
 </script>
 <h2>A geospatial tendril of a Nova Scotia Backpacking Trip</h1>
-<p>From Boston to Nova Scotia and back. Color/vertical direction is time. Other two axes are latitude and longitude. Click and drag tentril to rotate it in space</p>
+<p>Color/vertical direction is time: blue is driving up from Boston to Nova Scotia, purple is the backpacking trip at Cape Chignecto Provincial Park, and red is driving back from Nova Scotia to Boston. Other two axes are latitude and longitude. </p> 
+
+<p><b>Click a point </b>on the tendril to see a moment near that time and space.  <b>Drag</b> the tentril to rotate it in space</p>
 <div id="container" style="height: 600px"></div>
